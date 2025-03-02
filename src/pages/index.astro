@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import UnderConstruction from "../components/UnderConstruction.astro";
+import { isUnderConstruction, isMaintenance } from "@/config/environment";
+
+if (isUnderConstruction()) {
+  return Astro.redirect("/under-construction");
+}
+
+if (isMaintenance()) {
+  return Astro.redirect("/maintenance");
+}
 ---
 
-<Layout title="Portfolio | @je-martinez">
-  <main>
-    <UnderConstruction />
-  </main>
-</Layout>
+<Layout title="Portfolio | @je-martinez" />
