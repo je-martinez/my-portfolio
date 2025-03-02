@@ -1,5 +1,5 @@
 ---
-import { Sections } from "@/constants";
+import { NavLinks } from "@/constants";
 ---
 
 <div
@@ -14,85 +14,105 @@ import { Sections } from "@/constants";
         >JE MARTINEZ</span
       >
       <button
-        class="md:hidden focus:outline-none nav-toggle"
+        class="md:hidden focus:outline-none nav-toggle relative size-8"
         @click="open = !open"
       >
-        <!-- SVG Burger goes here -->
-        <svg id="burger" viewBox="0 0 20 20" class="w-6 h-6">
-          <path
-            x-show="!open"
-            fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
-            clip-rule="evenodd"></path>
-          <path
-            x-show="open"
-            fill-rule="evenodd"
-            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"></path>
-        </svg>
+        <span
+          :class="{'top-2.5 rotate-45': open, 'top-1': !open}"
+          class="hamburger absolute block h-0.5 w-6 bg-current transition-all duration-300 ease-in-out"
+        ></span>
+        <span
+          :class="{'opacity-0': open, 'opacity-100': !open}"
+          class="hamburger absolute top-2.5 block h-0.5 w-6 bg-current transition-all duration-300 ease-in-out"
+        ></span>
+        <span
+          :class="{'top-2.5 -rotate-45': open, 'top-4': !open}"
+          class="hamburger absolute block h-0.5 w-6 bg-current transition-all duration-300 ease-in-out"
+        ></span>
       </button>
     </div>
+
+    <div
+      :class="{'max-h-56 translate-y-0 opacity-100': open, 'max-h-0 -translate-y-4 opacity-0 pointer-events-none': !open}"
+      class="sm:hidden right-0 top-16 w-full origin-top transform rounded-md rounded-t-none transition-all duration-300 ease-in-out overflow-hidden header"
+    >
+      <div class="py-1">
+        {
+          NavLinks.map((link) => (
+            <a href={link.href} class="block text-black nav-link">
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
     <nav
-      :class="{'flex mt-4': open, 'hidden': !open}"
       class="flex-col flex-grow gap-8 hidden pb-4 md:pb-0 md:flex md:flex-row lg:ml-auto justify-end"
     >
-      <a href={`#${Sections.Hero}`} class="text-black nav-link">Home</a>
-      <a href={`#${Sections.About}`} class="text-black nav-link">About</a>
-      <a href={`#${Sections.Skills}`} class="text-black nav-link">Skills</a>
-      <a href={`#${Sections.Experience}`} class="text-black nav-link"
-        >Experience</a
-      >
-      <a href={`#${Sections.Contact}`} class="text-black nav-link">Contact</a>
+      {
+        NavLinks.map((link) => (
+          <a href={link.href} class="text-black nav-link">
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
   </div>
-</div>
 
-<script type="module">
-  document.addEventListener("DOMContentLoaded", function () {
-    const header = document.querySelector(".header");
-    const navLinks = document.querySelectorAll(".nav-link");
-    const title = document.querySelector(".site-title");
+  <script type="module">
+    document.addEventListener("DOMContentLoaded", function () {
+      const header = document.querySelector(".header");
+      const navLinks = document.querySelectorAll(".nav-link");
+      const title = document.querySelector(".site-title");
 
-    updateHeader();
-
-    window.addEventListener("scroll", function () {
       updateHeader();
-    });
 
-    navLinks.forEach(function (link) {
-      link.addEventListener("click", function () {
+      window.addEventListener("scroll", function () {
         updateHeader();
       });
-    });
 
-    function updateHeader() {
-      const atTop = window.pageYOffset <= 50;
-      header.classList.toggle("bg-white", atTop);
-      header.classList.toggle("bg-black", !atTop);
-      header.classList.toggle("bg-opacity-90", !atTop);
-      header.classList.toggle("backdrop-blur-xl", !atTop);
-      header.classList.toggle("max-w-3xl", !atTop);
-      updateTextColors(atTop);
-      updateTitleColor(atTop);
-      updateBurgerColor(atTop);
-    }
-
-    function updateTextColors(atTop) {
-      const textColor = atTop ? "text-black" : "text-white";
       navLinks.forEach(function (link) {
-        link.classList.remove(atTop ? "text-white" : "text-black");
-        link.classList.add(textColor);
+        link.addEventListener("click", function () {
+          updateHeader();
+        });
       });
-    }
 
-    function updateTitleColor(atTop) {
-      title.classList.remove(atTop ? "text-white" : "text-black");
-      title.classList.add(atTop ? "text-black" : "text-white");
-    }
+      function updateHeader() {
+        const atTop = window.pageYOffset <= 50;
+        header.classList.toggle("bg-white", atTop);
+        header.classList.toggle("bg-black", !atTop);
+        header.classList.toggle("bg-opacity-90", !atTop);
+        header.classList.toggle("backdrop-blur-xl", !atTop);
+        header.classList.toggle("max-w-3xl", !atTop);
+        updateTextColors(atTop);
+        updateTitleColor(atTop);
+        updateBurgerColor(atTop);
+      }
 
-    function updateBurgerColor(atTop) {
-      const burger = document.querySelector("#burger");
-      burger.setAttribute("fill", atTop ? "black" : "white");
-    }
-  });
-</script>
+      function updateTextColors(atTop) {
+        const textColor = atTop ? "text-black" : "text-white";
+        navLinks.forEach(function (link) {
+          link.classList.remove(atTop ? "text-white" : "text-black");
+          link.classList.add(textColor);
+        });
+      }
+
+      function updateTitleColor(atTop) {
+        title.classList.remove(atTop ? "text-white" : "text-black");
+        title.classList.add(atTop ? "text-black" : "text-white");
+      }
+
+      function updateBurgerColor(atTop) {
+        const burger = document.querySelectorAll(".hamburger");
+        if (!burger) {
+          return;
+        }
+        burger.forEach(function (b) {
+          b.classList.remove(atTop ? "text-white" : "text-black");
+          b.classList.add(atTop ? "text-black" : "text-white");
+        });
+      }
+    });
+  </script>
+</div>
