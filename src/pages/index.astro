@@ -1,5 +1,12 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
+
+import Hero from "@/components/sections/Hero.astro";
+import About from "@/components/sections/About.astro";
+import Contact from "@/components/sections/Contact.astro";
+import Skills from "@/components/sections/Skills.astro";
+import Experience from "@/components/sections/Experience.astro";
+
 import { isUnderConstruction, isMaintenance } from "@/config/environment";
 
 if (isUnderConstruction()) {
@@ -11,4 +18,10 @@ if (isMaintenance()) {
 }
 ---
 
-<Layout title="Portfolio | @je-martinez" />
+<Layout title="Portfolio | @je-martinez">
+  <Hero />
+  <About />
+  <Skills />
+  <Experience />
+  <Contact />
+</Layout>
