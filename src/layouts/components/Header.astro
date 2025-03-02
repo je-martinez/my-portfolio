@@ -18,7 +18,7 @@ import { Sections } from "@/constants";
         @click="open = !open"
       >
         <!-- SVG Burger goes here -->
-        <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+        <svg id="burger" viewBox="0 0 20 20" class="w-6 h-6">
           <path
             x-show="!open"
             fill-rule="evenodd"
@@ -74,6 +74,7 @@ import { Sections } from "@/constants";
       header.classList.toggle("max-w-3xl", !atTop);
       updateTextColors(atTop);
       updateTitleColor(atTop);
+      updateBurgerColor(atTop);
     }
 
     function updateTextColors(atTop) {
@@ -87,6 +88,11 @@ import { Sections } from "@/constants";
     function updateTitleColor(atTop) {
       title.classList.remove(atTop ? "text-white" : "text-black");
       title.classList.add(atTop ? "text-black" : "text-white");
+    }
+
+    function updateBurgerColor(atTop) {
+      const burger = document.querySelector("#burger");
+      burger.setAttribute("fill", atTop ? "black" : "white");
     }
   });
 </script>
