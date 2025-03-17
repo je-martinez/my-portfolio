@@ -1,0 +1,13 @@
+---
+import { sanityClient } from "sanity:client";
+
+const categories: { name: string; description: string }[] =
+  await sanityClient.fetch(`*[_type == "category"]`);
+---
+
+<div>
+  <h1>Categories</h1>
+  <ul>
+    {categories.map((category) => <li>{category.name}</li>)}
+  </ul>
+</div>
