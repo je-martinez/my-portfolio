@@ -16,6 +16,7 @@ export default defineConfig({
       dataset: environment().sanity.dataset,
       token: environment().sanity.readToken,
       useCdn: isProduction(),
+      studioBasePath: "/admin",
     }),
     react(),
   ],
